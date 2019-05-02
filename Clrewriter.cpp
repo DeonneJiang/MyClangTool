@@ -387,10 +387,18 @@ int main(int argc, char **argv)
 
 
 
+    // 大概的运作流程是
+    // 配置编译器实例，rewrtier实例，consumer实例，将rewriter传入consumer，consumer可以访问到rewriter的方法。
+    // 然后是启动整个流程，编译器实例parser文件得到ast，将ast传入consumer，consumer调用rewriter的方法对sourcecode进行改写。内容存在了rewrite实例的某一个
+    // 缓冲区里， 然后去缓冲器拿就ok。
+    // ok，it is so easy。
+
+
 
   if (OutErrorInfo == ok)
   {
-    // Parse the AST
+    // Parse the AST, during this two statement , all the things in the ast done.
+    // actually all the actions has been defined.
     ParseAST(compiler.getPreprocessor(), &astConsumer, compiler.getASTContext());
     compiler.getDiagnosticClient().EndSourceFile();
 
